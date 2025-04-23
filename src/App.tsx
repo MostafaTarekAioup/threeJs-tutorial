@@ -1,5 +1,11 @@
 import { Canvas, useFrame } from "@react-three/fiber"
-import { FirstPersonControls, OrbitControls } from "@react-three/drei"
+import {
+  FirstPersonControls,
+  OrbitControls,
+  GizmoHelper,
+  GizmoViewcube,
+  GizmoViewport,
+} from "@react-three/drei"
 import { useRef } from "react"
 import "./App.css"
 
@@ -21,6 +27,7 @@ function App() {
         // scale={[2, 2, 2]}
         ref={boxRef}
       >
+        <axesHelper args={[2]} />
         {/* <sphereGeometry args={[2, 80, 80]} /> */}
         {/* <torusKnotGeometry args={[1.3, 0.3, 256, 256]} /> */}
         <boxGeometry args={[2, 3, 2]} />
@@ -34,11 +41,15 @@ function App() {
         style={{ backgroundColor: "lightBlue" }}
         camera={{ position: [2, 2, 2] }}
       >
+        <GizmoHelper>
+          <GizmoViewport />
+        </GizmoHelper>
         {/* <FirstPersonControls
           movementSpeed={3}
           mouseDragOn={false}
           // autoForward
         /> */}
+        <gridHelper args={[25, 25]} />
         <OrbitControls />
         <BoxAnimation />
         <directionalLight position={[2, 5, 1]} />
