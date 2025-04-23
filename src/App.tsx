@@ -1,4 +1,4 @@
-import { Canvas, useFrame } from "@react-three/fiber"
+import { Canvas, useFrame, useLoader } from "@react-three/fiber"
 import {
   FirstPersonControls,
   OrbitControls,
@@ -6,10 +6,12 @@ import {
   GizmoViewcube,
   GizmoViewport,
   useHelper,
+  useGLTF,
 } from "@react-three/drei"
-import { use, useRef } from "react"
+import { useRef } from "react"
 import { useControls } from "leva"
 import { SpotLightHelper } from "three"
+import { GLTFLoader } from "three/examples/jsm/Addons.js"
 import "./App.css"
 
 function App() {
@@ -71,6 +73,17 @@ function App() {
       />
     )
   }
+
+  const Modle = () => {
+    const result = useLoader(GLTFLoader, "./Panda.gltf")
+    // const result = useGLTF("./Panda.gltf")
+    return <primitive object={result.scene} position={[1, 1, 1]} />
+  }
+  const Modle2 = () => {
+    // const result = useLoader(GLTFLoader, "./Panda.gltf")
+    const result = useGLTF("./Ghost.gltf")
+    return <primitive object={result.scene} position={[3, 1, 1]} />
+  }
   return (
     <div id='canvas-container' style={{ width: "100vw", height: "100vh" }}>
       <Canvas
@@ -87,11 +100,13 @@ function App() {
         /> */}
         <gridHelper args={[25, 25]} />
         <OrbitControls />
-        <BoxAnimation />
+        {/* <BoxAnimation /> */}
 
         {/* <ambientLight color={"red"} intensity={33} />    */}
         {/* <directionalLight position={[2, 5, 1]} /> */}
         <SpotLightHelperS />
+        <Modle />
+        <Modle2 />
       </Canvas>
     </div>
   )
