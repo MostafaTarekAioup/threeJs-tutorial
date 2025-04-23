@@ -7,19 +7,29 @@ import {
   GizmoViewport,
 } from "@react-three/drei"
 import { useRef } from "react"
+import { useControls } from "leva"
 import "./App.css"
 
 function App() {
   const BoxAnimation = () => {
     const boxRef = useRef(null)
-    // useFrame(() => {
-    //   // @ts-expect-error - current.rotation is not recognized on MeshRef type
-    //   boxRef.current.rotation.x += 0.005
-    //   // @ts-expect-error - current.rotation is not recognized on MeshRef type
-    //   boxRef.current.rotation.y += 0.005
-    //   // @ts-expect-error - current.rotation is not recognized on MeshRef type
-    //   boxRef.current.rotation.z += 0.005
-    // })
+    const { color, speed } = useControls({
+      color: "gold",
+      speed: {
+        value: 0.005,
+        min: 0,
+        max: 0.1,
+        step: 0.005,
+      },
+    })
+    useFrame(() => {
+      // @ts-expect-error - current.rotation is not recognized on MeshRef type
+      boxRef.current.rotation.x += speed
+      // @ts-expect-error - current.rotation is not recognized on MeshRef type
+      boxRef.current.rotation.y += speed
+      // @ts-expect-error - current.rotation is not recognized on MeshRef type
+      boxRef.current.rotation.z += speed
+    })
     return (
       <mesh
         // position={[-2, 2, 1]}
@@ -31,7 +41,7 @@ function App() {
         {/* <sphereGeometry args={[2, 80, 80]} /> */}
         {/* <torusKnotGeometry args={[1.3, 0.3, 256, 256]} /> */}
         <boxGeometry args={[2, 3, 2]} />
-        <meshToonMaterial color='red' />
+        <meshToonMaterial color={color} />
       </mesh>
     )
   }
