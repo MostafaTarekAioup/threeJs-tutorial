@@ -5,9 +5,11 @@ import {
   GizmoHelper,
   GizmoViewcube,
   GizmoViewport,
+  useHelper,
 } from "@react-three/drei"
-import { useRef } from "react"
+import { use, useRef } from "react"
 import { useControls } from "leva"
+import { SpotLightHelper } from "three"
 import "./App.css"
 
 function App() {
@@ -45,6 +47,30 @@ function App() {
       </mesh>
     )
   }
+  const SpotLightHelperS = () => {
+    const lightRef = useRef()
+    const { angle, penumbra } = useControls({
+      angle: Math.PI / 8,
+      penumbra: {
+        value: 0,
+        min: 0,
+        max: 1,
+        step: 0.1,
+      },
+    })
+
+    useHelper(lightRef, SpotLightHelper, "orange")
+
+    return (
+      <spotLight
+        ref={lightRef}
+        angle={angle}
+        penumbra={penumbra}
+        position={[2, 5, 1]}
+        intensity={80}
+      />
+    )
+  }
   return (
     <div id='canvas-container' style={{ width: "100vw", height: "100vh" }}>
       <Canvas
@@ -62,7 +88,10 @@ function App() {
         <gridHelper args={[25, 25]} />
         <OrbitControls />
         <BoxAnimation />
-        <directionalLight position={[2, 5, 1]} />
+
+        {/* <ambientLight color={"red"} intensity={33} />    */}
+        {/* <directionalLight position={[2, 5, 1]} /> */}
+        <SpotLightHelperS />
       </Canvas>
     </div>
   )
