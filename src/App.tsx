@@ -1,18 +1,19 @@
 import { Canvas, useFrame } from "@react-three/fiber"
+import { FirstPersonControls, OrbitControls } from "@react-three/drei"
 import { useRef } from "react"
 import "./App.css"
 
 function App() {
   const BoxAnimation = () => {
     const boxRef = useRef(null)
-    useFrame(() => {
-      // @ts-expect-error - current.rotation is not recognized on MeshRef type
-      boxRef.current.rotation.x += 0.005
-      // @ts-expect-error - current.rotation is not recognized on MeshRef type
-      boxRef.current.rotation.y += 0.005
-      // @ts-expect-error - current.rotation is not recognized on MeshRef type
-      boxRef.current.rotation.z += 0.005
-    })
+    // useFrame(() => {
+    //   // @ts-expect-error - current.rotation is not recognized on MeshRef type
+    //   boxRef.current.rotation.x += 0.005
+    //   // @ts-expect-error - current.rotation is not recognized on MeshRef type
+    //   boxRef.current.rotation.y += 0.005
+    //   // @ts-expect-error - current.rotation is not recognized on MeshRef type
+    //   boxRef.current.rotation.z += 0.005
+    // })
     return (
       <mesh
         // position={[-2, 2, 1]}
@@ -33,6 +34,12 @@ function App() {
         style={{ backgroundColor: "lightBlue" }}
         camera={{ position: [2, 2, 2] }}
       >
+        {/* <FirstPersonControls
+          movementSpeed={3}
+          mouseDragOn={false}
+          // autoForward
+        /> */}
+        <OrbitControls />
         <BoxAnimation />
         <directionalLight position={[2, 5, 1]} />
       </Canvas>
